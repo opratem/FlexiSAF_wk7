@@ -1,12 +1,15 @@
 package com.flexisaf.FlexiSAF_wk7.service.impl;
 
 import com.flexisaf.FlexiSAF_wk7.entity.LeaveRequest;
+import com.flexisaf.FlexiSAF_wk7.exception.ResourceNotFoundException;
 import com.flexisaf.FlexiSAF_wk7.repository.LeaveRequestRepository;
 import com.flexisaf.FlexiSAF_wk7.service.LeaveRequestService;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class LeaveRequestServiceImpl implements LeaveRequestService {
 
     private final LeaveRequestRepository leaveRequestRepository;
@@ -23,7 +26,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     }
 
     @Override
-    public LeaveRequest getLeaveRequest(long id){
+    public LeaveRequest getLeaveRequest(Long id){
         return leaveRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Leave request not found with id: " +id));
     }
@@ -34,7 +37,7 @@ public class LeaveRequestServiceImpl implements LeaveRequestService {
     }
 
     @Override
-    public List<LeaveRequest> getLeaveRequestByEmployee(Long employeeId){
+    public List<LeaveRequest> getLeaveRequestsByEmployee(Long employeeId){
         return leaveRequestRepository.findByEmployeeId(employeeId);
     }
 

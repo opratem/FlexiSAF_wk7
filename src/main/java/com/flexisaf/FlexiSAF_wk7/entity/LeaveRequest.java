@@ -41,11 +41,11 @@ public class LeaveRequest {
 
     private LocalDate dateReviewed;
 
-    private enum LeaveType{
+    public enum LeaveType{
         CASUAL, SICK, MATERNITY, ANNUAL, STUDY
     }
 
-    private enum LeaveStatus{
+    public enum LeaveStatus{
         PENDING, APPROVED, REJECTED, CANCELLED
     }
 

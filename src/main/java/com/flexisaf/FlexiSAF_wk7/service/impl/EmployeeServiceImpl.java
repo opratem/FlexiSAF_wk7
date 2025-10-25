@@ -1,10 +1,13 @@
 package com.flexisaf.FlexiSAF_wk7.service.impl;
 
 import com.flexisaf.FlexiSAF_wk7.entity.Employee;
+import com.flexisaf.FlexiSAF_wk7.exception.ResourceNotFoundException;
 import com.flexisaf.FlexiSAF_wk7.repository.EmployeeRepository;
 import com.flexisaf.FlexiSAF_wk7.service.EmployeeService;
 import org.springframework.data.annotation.Reference;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -24,9 +27,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAllEmployees(){
+        return employeeRepository.findAll();
+    }
+
+    @Override
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id);
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not found with id " + id));
     }
 
     @Override
