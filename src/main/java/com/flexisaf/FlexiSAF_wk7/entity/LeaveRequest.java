@@ -1,6 +1,8 @@
 package com.flexisaf.FlexiSAF_wk7.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -14,19 +16,24 @@ public class LeaveRequest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name= "employee_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id", nullable = false)
+    @NotNull(message = "Employee is required")
+    @JsonIgnoreProperties("leaveRequests")
     private Employee employee;
 
     @Column(nullable = false)
+    @NotNull(message = "Start date is required")
     private LocalDate startDate;
 
     @Column(nullable = false)
+    @NotNull(message = "End date is required")
     private LocalDate endDate;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private LeaveType leavetype;
+    @NotNull(message = "Leave type is required")
+    private LeaveType leaveType;
 
     @Enumerated(EnumType.STRING)
     private LeaveStatus status;
@@ -41,12 +48,11 @@ public class LeaveRequest {
 
     private LocalDate dateReviewed;
 
-    public enum LeaveType{
+    public enum LeaveType {
         CASUAL, SICK, MATERNITY, ANNUAL, STUDY
     }
 
-    public enum LeaveStatus{
+    public enum LeaveStatus {
         PENDING, APPROVED, REJECTED, CANCELLED
     }
-
 }
